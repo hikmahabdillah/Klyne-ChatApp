@@ -3,8 +3,33 @@ import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 
 export const login = async (req, res) => {
- 
+  const {email, password} = req.body;
+  try{
+    // input validation
+    if(!email || !password) return res.status(400).json({ message: "Please provide all required fields" });
+
+    const user = await User.findOne({email});
+    if(!user) return res.status(404).json({message: "User not found!"});
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if(!isMatch) return res.status(400).json({message: "Invalid password!"});
+
+    // after validation email and password, generate jwt token
+    generateToken(user._id, res);
+
+    res.status(201).json({
+      _id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+      profilePic: user.profilePic,
+      message: "User login successfully"
+    });
+  }catch(err){
+    console.log("Error in login controller", err);
+    res.status(500).json({message: "Internal server error"});
+  }
 }
+
 export const signup = async (req, res) => {
   const {fullName, email, password, profilePic} = req.body;
   try{
@@ -48,5 +73,11 @@ export const signup = async (req, res) => {
   }
 }
 export const logout = (req, res) => {
-  res.send("logout router");
+  try{
+    res.cookie("jwt", "", {maxAge:0});
+    res.status(200).json({message: "Logout successfully"});
+  }catch(err){
+    console.log("Error in logout controller", err);
+    res.status(500).json({message: "Internal server error"});
+  }
 }

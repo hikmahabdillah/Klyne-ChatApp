@@ -5,6 +5,7 @@ import {connectDB} from "./lib/db.js";
 
 import authRoutes from "./routes/auth.route.js"
 import messageRoutes from "./routes/message.route.js"
+import contactsRoutes from "./routes/contacts.route.js"
 
 dotenv.config();
 const app = express();
@@ -15,6 +16,7 @@ app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/message', messageRoutes);
+app.use('/api/contacts', contactsRoutes);
 
 app.listen(port, () => {
   console.log(`server is running in listen port ${port}`);

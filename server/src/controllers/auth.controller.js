@@ -20,6 +20,7 @@ export const login = async (req, res) => {
 
     res.status(201).json({
       _id: user._id,
+      customId: user.customId,
       fullName: user.fullName,
       email: user.email,
       profilePic: user.profilePic,
@@ -32,10 +33,10 @@ export const login = async (req, res) => {
 }
 
 export const signup = async (req, res) => {
-  const {fullName, email, password, profilePic} = req.body;
+  const {customId, fullName, email, password} = req.body;
   try{
     // input validation
-    if (!fullName || !email || !password) {
+    if (!customId || !fullName || !email || !password) {
       return res.status(400).json({ message: "Please provide all required fields" });
     }
 
@@ -50,7 +51,7 @@ export const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = new User({fullName, email, password: hashedPassword});
+    const newUser = new User({customId, fullName, email, password: hashedPassword});
 
     if(newUser){
       // generate jwt token
@@ -59,9 +60,9 @@ export const signup = async (req, res) => {
 
       res.status(201).json({
         _id: newUser._id,
+        customId: newUser.customId,
         fullName: newUser.fullName,
         email: newUser.email,
-        profilePic: newUser.profilePic,
         message: "User created successfully"
       });
     }else{
@@ -106,7 +107,7 @@ export const checkAuth = async(req,res) => {
   try{
     res.status(200).json(req.user);
   }catch(err){
-    console.log("Error in update profile controller", err);
+    console.log("Error in check auth controller", err);
     res.status(500).json({message: "Internal server error"});
   }
 }

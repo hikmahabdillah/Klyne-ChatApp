@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { Link } from "react-router-dom";
 import InputForm from "../components/InputForm";
+import { Loader2 } from "lucide-react";
+import toast from "react-hot-toast";
 
 const SignUpPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -14,17 +15,33 @@ const SignUpPage = () => {
 
   const { signUp, isSigningUp } = useAuthStore();
 
-  const validateForm = () => {};
+  const validateForm = () => {
+    if(!formData.customId.trim()) return toast.error("CustomId is required!")
+    if(formData.customId.trim().length < 3) return toast.error("CustomId is too short!")
+    if(!formData.fullName.trim()) return toast.error("Full name is required!")
+    if(!formData.password.trim()) return toast.error("Password is required!")
+    if(formData.password.trim().length < 6) return toast.error("Password must be at least 6 characters!")
+    if(!formData.email.trim()) return toast.error("Email is required!")
+    if(!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid email format")
+
+    return true;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const success = validateForm();
+
+    if(success) console.log('success');
   };
 
   return (
     <div className="min-h-screen flex justify-center items-center p-5">
       <div className="box flex items-center gap-3 border border-red-50 w-full max-w-md md:max-w-4xl py-6 md:p-3 rounded-3xl max-h-[630px] md:h-full">
-        <div className="hidden box-1 h-[585px] w-full max-w-sm bg-gradient-to-t from-[#ddd] via-[#794CEB] to-[#FF00E5] rounded-xl md:flex md:items-center">
-          <img src="./public/Signup-Illustration.svg" alt="" />
+        {/* leftSide */}
+        <div className="hidden h-[585px] w-full max-w-sm bg-gradient-size animate-gradient duration-300 bg-gradient-to-t from-[#ddd] via-[#794CEB] to-[#FF00E5] rounded-xl md:flex md:items-center">
+          <img src="./public/Signup-Illustration.svg" className="animate-float" alt="" />
         </div>
+        {/* rightSide */}
         <form
           onSubmit={handleSubmit}
           className="w-full flex flex-col gap-4 px-5"
@@ -46,7 +63,7 @@ const SignUpPage = () => {
           <InputForm formData={formData} setFormData={setFormData} name="email" text="Email" type="email"/>
           <InputForm formData={formData} setFormData={setFormData} name="password" text="Password" type="password"/>
         </div>
-          <button className="btn btn-primary w-full">Register</button>
+          <button className="btn btn-primary w-full" disabled={isSigningUp}>{isSigningUp ? <Loader2 className="animate-spin"/> : "Register"}</button>
           <p className="text-center">
           Don't have an account?  
             <Link to="/login" className="text-[#794CEB] font-semibold text-underline"> Login</Link>

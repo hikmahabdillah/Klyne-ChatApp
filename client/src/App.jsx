@@ -9,6 +9,7 @@ import ContactsPage from "./pages/ContactsPage";
 import { useAuthStore } from "./store/useAuthStore";
 import { useEffect } from "react";
 import {Loader} from "lucide-react";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const {authUser, checkAuth, isCheckingAuth} = useAuthStore();
@@ -42,6 +43,8 @@ const App = () => {
         <Route path="/contacts" element={authUser ? <ContactsPage /> : <Navigate to="/login"/>} />
         <Route path="/settings" element={authUser ? <SettingsPage /> : <Navigate to="/login"/>} />
       </Routes>
+
+      <Toaster/>
     </>
   );
 };

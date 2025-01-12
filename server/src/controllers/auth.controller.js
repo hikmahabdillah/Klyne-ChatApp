@@ -45,8 +45,17 @@ export const signup = async (req, res) => {
       return res.status(400).json({message: "Password must be at least 6 characters"});
     }
 
-    const user = await User.findOne({email});
-    if(user) return res.status(400).json({message: "Email already exists"});
+   // Check for existing customId
+   const existingCustomId = await User.findOne({ customId });
+   if (existingCustomId) {
+     return res.status(400).json({ message: "Custom ID already exists" });
+   }
+
+   // Check for existing email
+   const existingEmail = await User.findOne({ email });
+   if (existingEmail) {
+     return res.status(400).json({ message: "Email already exists" });
+   }
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);

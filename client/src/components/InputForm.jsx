@@ -10,9 +10,9 @@ const InputForm = ({formData, setFormData, name, text, type}) => {
       type={type}
       placeholder={text}
       className="input input-bordered input-primary"
-      value={formData.customId}
+      value={formData[name] || ''}
       onChange={(e) =>
-        setFormData({ ...formData, customId: e.target.value })
+        setFormData({ ...formData, [name]: e.target.value})
       }
     />
   </div>

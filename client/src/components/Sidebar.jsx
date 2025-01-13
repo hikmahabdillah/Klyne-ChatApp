@@ -6,10 +6,10 @@ const Sidebar = () => {
   return (
     <>
       <div className="flex flex-col justify-between items-center h-screen w-max">
-      <div className="flex flex-col gap-4 items-center p-4">
+      <div className="flex flex-col gap-4 items-center p-2">
         <img src="./Main Logo.svg" alt="Logo Klyne" width="45px" />
         <div className="w-full bg-slate-50 h-[0.5px]"/>
-        <a href="#" className="tooltip tooltip-right tooltip-info" data-tip="Chat Messages"><img src="./Messages.svg" alt="" width="37px" /></a>
+        <a href="#" className="tooltip tooltip-right tooltip-info p-2 rounded-lg rounded-tl-none bg-neutral-700 border-l-4 border-[#794CEB]" data-tip="Chat Messages"><img src="./Messages.svg" alt="" width="37px" /></a>
         <a href="#" className="tooltip tooltip-right tooltip-info" data-tip="Archived Chat"><img src="./Archived.svg" alt="" width="37px" /></a>
         <a href="#" className="tooltip tooltip-right tooltip-info" data-tip="Contacts"><img src="./Contacts.svg" alt="" width="37px" /></a>
       </div>

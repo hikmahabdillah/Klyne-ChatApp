@@ -1,4 +1,4 @@
-import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
@@ -25,12 +25,6 @@ const App = () => {
     </div>
   )
 
-  const location = useLocation();
-  // page without navbar
-  const noNavbarPages = [
-    "/login", "/signup"
-  ]
-
   const navigatePage = ({ element, requiresAuth }) => {
     return requiresAuth
       ? (authUser ? element : <Navigate to="/login" />)
@@ -40,12 +34,10 @@ const App = () => {
 
   return (
     <>
-      {!noNavbarPages.includes(location.pathname) && <Navbar />}
-
       <Routes>
-      <Route path="/" element={navigatePage({ element: <HomePage />, requiresAuth: true })} />
       <Route path="/signup" element={navigatePage({ element: <SignUpPage />, requiresAuth: false })} />
       <Route path="/login" element={navigatePage({ element: <LoginPage />, requiresAuth: false })} />
+      <Route path="/" element={navigatePage({ element: <HomePage />, requiresAuth: true })} />
       <Route path="/profile" element={navigatePage({ element: <ProfilePage />, requiresAuth: true })} />
       <Route path="/contacts" element={navigatePage({ element: <ContactsPage />, requiresAuth: true })} />
       <Route path="/settings" element={navigatePage({ element: <SettingsPage />, requiresAuth: true })} />

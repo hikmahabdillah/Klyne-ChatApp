@@ -39,7 +39,7 @@ const SignUpPage = () => {
       <div className="box flex items-center gap-3 border border-red-50 w-full max-w-md md:max-w-4xl py-6 md:p-3 rounded-3xl max-h-[630px] md:h-full">
         {/* leftSide */}
         <div className="hidden h-[585px] w-full max-w-sm bg-gradient-size animate-gradient duration-300 bg-gradient-to-t from-[#ddd] via-[#794CEB] to-[#FF00E5] rounded-xl md:flex md:items-center">
-          <img src="./public/Signup-Illustration.svg" className="animate-float" alt="" />
+          <img src="./Signup-Illustration.svg" className="animate-float" alt="" />
         </div>
         {/* rightSide */}
         <form
@@ -48,7 +48,7 @@ const SignUpPage = () => {
         >
           <div className="header">
             <div className="logo flex items-center gap-3">
-              <img src="./public/Main Logo.svg" alt="Logo Klyne" width="65px" />
+              <img src="./Main Logo.svg" alt="Logo Klyne" width="65px" />
               <h1 className="text-3xl md:text-4xl font-bold mb-3">
                 Create Account
               </h1>

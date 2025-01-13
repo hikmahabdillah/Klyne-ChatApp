@@ -16,7 +16,7 @@ const App = () => {
 
   useEffect(()=> {
     checkAuth();
-  }, [checkAuth]);
+  }, []);
 
   if(isCheckingAuth && !authUser) return(
     // <span className="loading loading-ring loading-lg"></span>
@@ -31,17 +31,24 @@ const App = () => {
     "/login", "/signup"
   ]
 
+  const navigatePage = ({ element, requiresAuth }) => {
+    return requiresAuth
+      ? (authUser ? element : <Navigate to="/login" />)
+      : (!authUser ? element : <Navigate to="/" />);
+  };
+  
+
   return (
     <>
       {!noNavbarPages.includes(location.pathname) && <Navbar />}
 
       <Routes>
-        <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login"/>} />
-        <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/"/>}/>
-        <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to="/"/>}/>
-        <Route path="/profile" element={authUser ? <ProfilePage /> : <Navigate to="/login"/>} />
-        <Route path="/contacts" element={authUser ? <ContactsPage /> : <Navigate to="/login"/>} />
-        <Route path="/settings" element={authUser ? <SettingsPage /> : <Navigate to="/login"/>} />
+      <Route path="/" element={navigatePage({ element: <HomePage />, requiresAuth: true })} />
+      <Route path="/signup" element={navigatePage({ element: <SignUpPage />, requiresAuth: false })} />
+      <Route path="/login" element={navigatePage({ element: <LoginPage />, requiresAuth: false })} />
+      <Route path="/profile" element={navigatePage({ element: <ProfilePage />, requiresAuth: true })} />
+      <Route path="/contacts" element={navigatePage({ element: <ContactsPage />, requiresAuth: true })} />
+      <Route path="/settings" element={navigatePage({ element: <SettingsPage />, requiresAuth: true })} />
       </Routes>
 
       <Toaster/>

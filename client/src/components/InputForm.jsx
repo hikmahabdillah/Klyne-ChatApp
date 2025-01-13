@@ -6,6 +6,7 @@ const ShowPasswordBtn = ({showPassword, setShowPassword}) => {
     <button
       className="absolute right-3 top-[70%] -translate-y-1/2"
       onClick={() => setShowPassword(!showPassword)}
+      type="button"
     >
       {showPassword ? <EyeOff/> : <Eye/> }
     </button>

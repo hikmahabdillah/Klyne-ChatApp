@@ -23,9 +23,8 @@ export const useAuthStore = create((set)=> ({
     }
   },
   login: async(data) => {
+    set({isLogin: true});
     try{
-      set({isLogin: true});
-
       const res = await axiosInstance.post("/auth/login", data);
       toast.success("Login successfully")
 
@@ -39,8 +38,8 @@ export const useAuthStore = create((set)=> ({
     }
   },
   signUp: async(data) => {
+    set({isSigningUp: true});
     try{
-      set({isSigningUp: true});
       const res = await axiosInstance.post("/auth/signup", data);
       toast.success("Account create successfully")
 
@@ -51,6 +50,20 @@ export const useAuthStore = create((set)=> ({
       toast.error(errorMessage);
     }finally{
       set({isSigningUp: false});
+    }
+  },
+  logout: async() => {
+    try{
+      const res = await axiosInstance.post("/auth/logout");
+      toast.success(res.data.message);
+
+      set({authUser: null});
+    }catch(err){
+      console.log("error", err)
+      const errorMessage = err.response?.data?.message || "Something went wrong!";
+      toast.error(errorMessage);
+    }finally{
+      set({isCheckingAuth: false});
     }
   }
 }));

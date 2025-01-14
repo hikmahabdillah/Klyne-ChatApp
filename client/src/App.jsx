@@ -35,12 +35,12 @@ const App = () => {
   return (
     <>
       <Routes>
-      <Route path="/signup" element={navigatePage({ element: <SignUpPage />, requiresAuth: false })} />
-      <Route path="/login" element={navigatePage({ element: <LoginPage />, requiresAuth: false })} />
-      <Route path="/" element={navigatePage({ element: <HomePage />, requiresAuth: true })} />
-      <Route path="/profile" element={navigatePage({ element: <ProfilePage />, requiresAuth: true })} />
-      <Route path="/contacts" element={navigatePage({ element: <ContactsPage />, requiresAuth: true })} />
-      <Route path="/settings" element={navigatePage({ element: <SettingsPage />, requiresAuth: true })} />
+        <Route path="/signup" element={navigatePage({ element: <SignUpPage />, requiresAuth: false })} />
+        <Route path="/login" element={navigatePage({ element: <LoginPage />, requiresAuth: false })} />
+        <Route path="/" element={navigatePage({ element: <HomePage />, requiresAuth: true })} />
+        <Route path="/profile" element={navigatePage({ element: <ProfilePage />, requiresAuth: true })} />
+        <Route path="/contacts" element={navigatePage({ element: <ContactsPage />, requiresAuth: true })} />
+        <Route path="/settings" element={navigatePage({ element: <SettingsPage />, requiresAuth: true })} />
       </Routes>
 
       <Toaster/>

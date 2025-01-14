@@ -1,6 +1,4 @@
-import { Search } from "lucide-react";
 import Sidebar from "../components/Sidebar";
-import Chat from "../components/Chat";
 import ChatHeader from "../components/ChatHeader";
 import ChatList from "../components/ChatList";
 import ChatContainer from "../components/ChatContainer";

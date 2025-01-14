@@ -1,7 +1,15 @@
+import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
+import { useLocation } from 'react-router-dom'
+
 
 const Sidebar = () => {
   const { logout } = useAuthStore();
+  const location = useLocation();
+
+  const activeClass = (path) => {
+    return (location.pathname === path ? "p-2 rounded-lg rounded-tl-none bg-neutral-700 border-l-4 border-[#794CEB]" : "")
+  }
 
   return (
     <>
@@ -9,15 +17,15 @@ const Sidebar = () => {
       <div className="flex flex-col gap-4 items-center p-2">
         <img src="./Main Logo.svg" alt="Logo Klyne" width="45px" />
         <div className="w-full bg-slate-50 h-[0.5px]"/>
-        <a href="#" className="tooltip tooltip-right tooltip-info p-2 rounded-lg rounded-tl-none bg-neutral-700 border-l-4 border-[#794CEB]" data-tip="Chat Messages"><img src="./Messages.svg" alt="" width="37px" /></a>
-        <a href="#" className="tooltip tooltip-right tooltip-info" data-tip="Archived Chat"><img src="./Archived.svg" alt="" width="37px" /></a>
-        <a href="#" className="tooltip tooltip-right tooltip-info" data-tip="Contacts"><img src="./Contacts.svg" alt="" width="37px" /></a>
+        <Link to="/" className={`tooltip tooltip-right font-medium text-slate-50 ${activeClass('/')}`} data-tip="Chat Messages"><img src="./Messages.svg" alt="" width="37px" /></Link>
+        <Link to="#" className={`tooltip tooltip-right font-medium text-slate-50 ${activeClass('#')}`} data-tip="Archived Chat"><img src="/Archived.svg" alt="" width="37px" /></Link>
+        <Link to="/contacts" className={`tooltip tooltip-right font-medium text-slate-50 ${activeClass('/contacts')}`} data-tip="Contacts"><img src="/Contacts.svg" alt="" width="37px" /></Link>
       </div>
       <div className="flex flex-col gap-4 items-center p-4">
-        <a href="#" className="tooltip tooltip-right tooltip-info" data-tip="Settings"><img src="./Settings.svg" alt="" width="37px" /></a>
-        <a href="#" className="tooltip tooltip-right tooltip-info" data-tip="Profile"><img className="size-10 object-cover rounded-full" src="https://i.pinimg.com/736x/79/91/14/799114671e44914759d41f8dc1fa16f8.jpg" alt="" width="37px" /></a>
+        <Link to="/settings" className={`tooltip tooltip-right font-medium text-slate-50 ${activeClass('/settings')}`} data-tip="Settings"><img src="./Settings.svg" alt="" width="37px" /></Link>
+        <Link to="/profile" className={`tooltip tooltip-right font-medium text-slate-50 ${activeClass('/profile')}`} data-tip="Profile"><img className="size-10 object-cover rounded-full" src="https://i.pinimg.com/736x/79/91/14/799114671e44914759d41f8dc1fa16f8.jpg" alt="" width="37px" /></Link>
         <div className="w-full bg-slate-50 h-[0.5px]"/>
-        <label className="cursor-pointer tooltip tooltip-right tooltip-info" data-tip="Logout" htmlFor="logout_modal"><img src="./Logout.svg" alt="" width="37px" /></label>
+        <label className="cursor-pointer tooltip tooltip-right font-medium text-slate-50" data-tip="Logout" htmlFor="logout_modal"><img src="/Logout.svg" alt="" width="37px" /></label>
       </div>
       </div>
       <input type="checkbox" id="logout_modal" className="modal-toggle" />

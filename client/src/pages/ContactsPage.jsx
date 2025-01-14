@@ -1,6 +1,11 @@
+import Sidebar from "../components/Sidebar";
+
 const ContactsPage = () => {
   return (
-    <div>ContactsPage</div>
+    <div className="h-screen flex items-center">
+      <Sidebar />
+      <div className="">Contacts Page</div>
+    </div>
   )
 }
 

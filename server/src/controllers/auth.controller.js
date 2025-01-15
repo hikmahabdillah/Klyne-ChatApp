@@ -1,5 +1,6 @@
 import { generateToken } from "../lib/utils.js";
 import User from "../models/user.model.js";
+import Contacts from "../models/contacts.model.js";
 import bcrypt from "bcryptjs";
 import cloudinary from "../lib/cloudinary.js";
 
@@ -93,7 +94,7 @@ export const logout = (req, res) => {
   }
 }
 
-export const updateProfile = async (req, res) => {
+export const updatePhotoProfile = async (req, res) => {
   try{
     const {profilePic} = req.body;
     const userId = req.user._id;
@@ -103,9 +104,46 @@ export const updateProfile = async (req, res) => {
     }
 
     const uploadResponse = await cloudinary.uploader.upload(profilePic);
-    const updatedUser = await User.findByIdAndUpdate(userId, {profilePic: uploadResponse.secure_url}, {new:true})
+    const updatedPhoto = await User.findByIdAndUpdate(userId, {profilePic: uploadResponse.secure_url}, {new:true})
 
-    res.status(200).json(updatedUser);
+    res.status(200).json(updatedPhoto);
+  }catch(err){
+    console.log("Error in update profile controller", err);
+    res.status(500).json({message: "Internal server error"});
+  }
+}
+
+export const updateProfile = async (req, res) => {
+  try{
+    const {customId, fullName, email} = req.body;
+    const userId = req.user._id;
+    const userCustomId = req.user.customId;
+
+    const existingCustomId = await User.findOne({
+      customId,
+      _id: { $ne: userId },
+    });
+    if (existingCustomId) {
+      return res.status(400).json({ message: "Custom ID already exists" });
+    }
+    
+    const existingEmail = await User.findOne({
+      email,
+      _id: { $ne: userId },
+    });
+    if (existingEmail) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+    
+   
+    const updatedUser = await User.findByIdAndUpdate(userId, {customId, fullName, email}, {new:true})
+    if(updatedUser){
+      await Contacts.updateMany({userId: userCustomId}, {userId: updatedUser.customId})
+      await Contacts.updateMany({contactId: userCustomId}, {contactId: updatedUser.customId})
+
+      res.status(200).json({updatedUser, message: "Update user successfully!"});
+    }
+
   }catch(err){
     console.log("Error in update profile controller", err);
     res.status(500).json({message: "Internal server error"});

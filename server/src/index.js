@@ -13,13 +13,14 @@ const app = express();
 const port = process.env.PORT;
 
 // middleware
-app.use(express.json()); // middleware that will process the JSON-formatted request body
+app.use(express.json({ limit: "10mb" })); // middleware that will process the JSON-formatted request body
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(cookieParser());
 
 // handle cors
 const corsOptions = {
   origin: 'http://localhost:5173',
-  method: 'GET, POST, PUT, DELETE',
+  method: 'GET, POST, PUT, PATCH, DELETE',
   credentials: true,
 }
 app.use(cors(corsOptions));

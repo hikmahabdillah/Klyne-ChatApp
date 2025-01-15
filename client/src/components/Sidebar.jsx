@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 
 
 const Sidebar = () => {
-  const { logout } = useAuthStore();
+  const { logout, authUser } = useAuthStore();
   const location = useLocation();
 
   const activeClass = (path) => {
@@ -23,7 +23,7 @@ const Sidebar = () => {
       </div>
       <div className="flex flex-col gap-4 items-center p-2">
         <Link to="/settings" className={`tooltip tooltip-right font-medium text-slate-50 ${activeClass('/settings')}`} data-tip="Settings"><img src="./Settings.svg" alt="" width="37px" /></Link>
-        <Link to="/profile" className={`tooltip tooltip-right font-medium text-slate-50 ${activeClass('/profile')}`} data-tip="Profile"><img className="size-9 object-cover rounded-full" src="https://i.pinimg.com/736x/79/91/14/799114671e44914759d41f8dc1fa16f8.jpg" alt="" width="37px" /></Link>
+        <Link to="/profile" className={`tooltip tooltip-right font-medium text-slate-50 ${activeClass('/profile')}`} data-tip="Profile"><img className="size-9 object-cover rounded-full" src={authUser.profilePic || "/Avatar.svg"} alt="" width="37px" /></Link>
         <div className="w-full bg-slate-50 h-[0.5px]"/>
         <label className="cursor-pointer tooltip tooltip-right font-medium text-slate-50" data-tip="Logout" htmlFor="logout_modal"><img src="/Logout.svg" alt="" width="37px" /></label>
       </div>

@@ -1,5 +1,5 @@
 import Contacts from "../models/contacts.model.js";
-// import User from "../models/user.model.js";
+import User from "../models/user.model.js";
 
 export const listContact = async(req, res) => {
   try{
@@ -44,6 +44,9 @@ export const saveContact = async(req, res) => {
     }
 
     // user validation
+    const existUser = await User.findOne({customId: contactId});
+    if(!existUser) return res.status(404).json({message: "User not found"});
+
     const contacts = await Contacts.findOne({contactId});
     if(contacts) return res.status(400).json({message: "Contact already exist"});
 

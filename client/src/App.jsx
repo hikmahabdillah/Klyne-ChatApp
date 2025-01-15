@@ -1,4 +1,3 @@
-import Sidebar from "./components/Sidebar";
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";

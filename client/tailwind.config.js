@@ -10,20 +10,14 @@ export default {
     extend: {
       animation: {
         float: 'float 3s ease-in-out infinite',
-        gradient: 'gradient 5s ease infinite',
+        scaleUp: 'scaleUp 0.5s ease-in-out',
       },
       keyframes: {
-        gradient: {
-          '0%, 100%': {
-            'background-position': '0% 50%',
-          },
-          '50%': {
-            'background-position': '100% 50%',
-          },
-        },
-        backgroundSize: {
-          'gradient-size': '200%',
-        },
+        scaleUp: {
+          '0%': { transform: 'scale(0)', opacity: 0 },
+          '60%': { transform: 'scale(1.1)', opacity: 0.7 },
+          '100%': { transform: 'scale(1)', opacity: 1 },
+        },        
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-20px)' },

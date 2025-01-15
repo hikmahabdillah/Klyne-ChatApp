@@ -1,16 +1,31 @@
 import Contacts from "../models/contacts.model.js";
 import User from "../models/user.model.js";
 
+export const listUser = async(req, res) => {
+  try{
+    const loginUserId = req.user._id;
+
+    const users = await User.find({_id: {$ne: loginUserId}}).select("customId email fullName profilePic createdAt");
+
+    res.status(200).json(users);
+  }catch(err){
+    console.log("Error in listUser controller", err);
+    res.status(500).json({message: "Internal server error"});
+  }
+}
+
 export const listContact = async(req, res) => {
   try{
     const loginUserId = req.user.customId;
 
-    const contacts = await Contacts.find({userId: loginUserId}).select("-__v");
+    const contacts = await Contacts.find({userId: loginUserId}).select("contactId contactName createdAt");
     res.status(200).json(contacts);
   }catch(err){
-    
+    console.log("Error in listContact controller", err);
+    res.status(500).json({message: "Internal server error"});
   }
 }
+
 export const searchContact = async (req, res) => {
   try {
     const loginUserId = req.user.customId;

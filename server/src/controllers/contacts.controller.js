@@ -19,7 +19,18 @@ export const listContact = async(req, res) => {
     const loginUserId = req.user.customId;
 
     const contacts = await Contacts.find({userId: loginUserId}).select("contactId contactName createdAt");
-    res.status(200).json(contacts);
+    const profilePics = await User.find({ customId: { $in: contacts.map(c => c.contactId) } })
+    .select("customId profilePic");
+    
+    const result = contacts.map(contact => {
+      const profile = profilePics.find(p => p.customId.toString() === contact.contactId.toString());
+      return {
+          ...contact.toObject(), 
+          profilePic: profile ? profile.profilePic : null
+      };
+    });
+
+    res.status(200).json(result);
   }catch(err){
     console.log("Error in listContact controller", err);
     res.status(500).json({message: "Internal server error"});

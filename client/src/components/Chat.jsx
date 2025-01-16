@@ -8,7 +8,7 @@ const Chat = ({photo, name, lastText, lastChatTime, isOpen = false}) => {
       </div>
       <div>
         <h2 className="text-lg text-slate-50 font-semibold">{name}</h2>
-        <p className="text-sm">{lastText}</p>
+        <p className="text-sm truncate max-w-44 md:max-w-md">{lastText}</p>
       </div>
       <p className="absolute top-2 right-3">{lastChatTime}</p>
     </div>

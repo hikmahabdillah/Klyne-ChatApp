@@ -1,7 +1,8 @@
 import { Search } from "lucide-react";
 import Sidebar from "../components/Sidebar";
 import { useContactsStore } from "../store/useContactsStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
 
 const Contact = ({contact}) => {
   return (
@@ -25,12 +26,22 @@ const Contact = ({contact}) => {
 };
 
 const ContactsPage = () => {
-
-  const {contacts, listContact, isLoading} = useContactsStore();
-
-  useEffect(()=> {
-    listContact();
-  }, []);
+  const [search, setSearch] = useState("");
+  const [debouncedValue] = useDebounce(search, 700);
+  const { contacts, listContact, searchContact, isLoading } = useContactsStore();
+  
+  useEffect(() => {
+    if (debouncedValue.trim() !== "") {
+      searchContact(debouncedValue); 
+    } else {
+      listContact(); 
+    }
+  }, [debouncedValue]);
+  
+  const handleSearch = async (e) => {
+    const value = e.target.value;
+    setSearch(value);
+  }
 
   return (
     <div className="h-screen flex items-center">
@@ -40,16 +51,24 @@ const ContactsPage = () => {
           <h1 className="text-2xl font-bold bg-gradient-to-r from-[#FF00E5] to-[#794CEB] text-transparent bg-clip-text pb-1">
             My Contacts
           </h1>
-          {/* search */}
+          {/* Search */}
           <label className="input input-bordered flex items-center gap-2 p-3 mt-3">
             <Search />
-            <input type="text" className="grow" placeholder="Search contact" />
+            <input 
+              type="text" 
+              value={search} 
+              onChange={handleSearch} 
+              className="grow" 
+              placeholder="Search contact" 
+            />
           </label>
           <p className="my-3">{contacts?.length} Contacts</p>
           <div className="flex flex-col gap-4 p-3 overflow-auto md:max-h-[400px] border border-neutral-700 rounded-lg">
-            {isLoading ? contacts.map((item, index) => (
-              <Contact contact={item} key={index} />
-            )) : "Loading..."}
+            {!isLoading 
+              ? contacts.map((item, index) => (
+                  <Contact contact={item} key={index} />
+                ))
+              : "Loading..."}
           </div>
         </div>
       </div>

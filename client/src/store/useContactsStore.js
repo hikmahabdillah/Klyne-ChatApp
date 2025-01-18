@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 export const useContactsStore = create((set) => ({
   contacts: [],
-  isLoading: true,
+  isLoading: false,
 
   listContact: async() => {
     try {
@@ -12,10 +12,24 @@ export const useContactsStore = create((set) => ({
 
       set({contacts: res.data});
     } catch (err) {
-      console.log("Error in check auth: ",err)
+      console.log("Error in list contact: ",err)
       set({contacts:null});
     }finally{
-      set({isLoading: true})
+      set({isLoading: false})
+    }
+  },
+  searchContact: async(searchTerm) => {
+    // set({isLoading: true})
+    try{
+      console.log("contactcontact name : ", searchTerm)
+      const res = await axiosInstance.get(`contacts/search-contact?contactName=${searchTerm}`);
+
+      set({contacts: res.data});
+    }catch(err){
+      console.log("Error in searchContact: ",err)
+      set({contacts:null});
+    }finally{
+      set({isLoading: false})
     }
   }
 }));

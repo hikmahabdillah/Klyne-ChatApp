@@ -40,19 +40,29 @@ export const listContact = async(req, res) => {
 export const searchContact = async (req, res) => {
   try {
     const loginUserId = req.user.customId;
-    const {contactName} = req.body;
-    const filteredContacts = await Contacts.find({
+    const {contactName} = req.query;
+    const contacts = await Contacts.find({
       userId: loginUserId,
       $or: [
         { contactName: { $regex: contactName, $options: "i" } }, // Pencarian nama kontak
       ],
     }).select("-__v"); 
+    const profilePics = await User.find({ customId: { $in: contacts.map(c => c.contactId) } })
+    .select("customId profilePic");
     
-    if (!filteredContacts || filteredContacts.length === 0) {
+    if (!contacts || contacts.length === 0) {
       return res.status(404).json({ message: "No contacts found" });
     }
 
-    res.status(200).json(filteredContacts);
+    const result = contacts.map(contact => {
+      const profile = profilePics.find(p => p.customId.toString() === contact.contactId.toString());
+      return {
+          ...contact.toObject(), 
+          profilePic: profile ? profile.profilePic : null
+      };
+    });
+
+    res.status(200).json(result);
   } catch (err) {
     console.log("Error in searchContacts controller", err);
     res.status(500).json({message: "Internal server error"});

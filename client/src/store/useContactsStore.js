@@ -1,5 +1,5 @@
-import {create} from "zustand";
-import {axiosInstance} from "../lib/axios";
+import { create } from "zustand";
+import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 
 export const useContactsStore = create((set) => ({
@@ -7,57 +7,78 @@ export const useContactsStore = create((set) => ({
   users: [],
   isLoading: true,
 
-  contactList: async() => {
-    set({isLoading: true})
+  contactList: async () => {
+    set({ isLoading: true });
     try {
-      const res = await axiosInstance.get("/contacts")
+      const res = await axiosInstance.get("/contacts");
 
-      set({contacts: res.data});
+      set({ contacts: res.data });
     } catch (err) {
-      console.log("Error in list contact: ",err)
-      set({contacts:null});
-    }finally{
-      set({isLoading: false})
+      console.log("Error in list contact: ", err);
+      set({ contacts: null });
+    } finally {
+      set({ isLoading: false });
     }
   },
-  userList: async() => {
-    set({isLoading: true})
+  userList: async () => {
+    set({ isLoading: true });
     try {
-      const res = await axiosInstance.get("/contacts/list-user")
+      const res = await axiosInstance.get("/contacts/list-user");
 
-      set({users: res.data});
+      set({ users: res.data });
     } catch (err) {
-      console.log("Error in list contact: ",err)
-      set({contacts:null});
-    }finally{
-      set({isLoading: false})
+      console.log("Error in list contact: ", err);
+      set({ contacts: null });
+    } finally {
+      set({ isLoading: false });
     }
   },
-  searchUser: async(searchTerm) => {
-    set({isLoading: true})
-    try{
-      const res = await axiosInstance.get(`contacts/search-user?searchId=${searchTerm}`);
+  searchUser: async (searchTerm) => {
+    set({ isLoading: true });
+    try {
+      const res = await axiosInstance.get(
+        `contacts/search-user?searchId=${searchTerm}`
+      );
 
-      set({users: res.data});
-    }catch(err){
-      console.log("Error in searchContact: ",err)
-      set({users:null});
-    }finally{
-      set({isLoading: false})
+      set({ users: res.data });
+    } catch (err) {
+      console.log("Error in searchContact: ", err);
+      set({ users: null });
+    } finally {
+      set({ isLoading: false });
     }
   },
-  searchContact: async(searchTerm) => {
-    set({isLoading: true})
-    try{
-      console.log("contactcontact name : ", searchTerm)
-      const res = await axiosInstance.get(`contacts/search-contact?contactName=${searchTerm}`);
+  searchContact: async (searchTerm) => {
+    set({ isLoading: true });
+    try {
+      const res = await axiosInstance.get(
+        `contacts/search-contact?contactName=${searchTerm}`
+      );
 
-      set({contacts: res.data});
-    }catch(err){
-      console.log("Error in searchContact: ",err)
-      set({contacts:null});
-    }finally{
-      set({isLoading: false})
+      set({ contacts: res.data });
+    } catch (err) {
+      console.log("Error in searchContact: ", err);
+      set({ contacts: null });
+    } finally {
+      set({ isLoading: false });
     }
-  }
+  },
+  saveContact: async (data) => {
+    set({ isLoading: true });
+    try {
+      const res = await axiosInstance.post("contacts/save-contact", data);
+      toast.success("Save contact successfully");
+
+      set((state) => ({
+        contacts: [...state.contacts, res.data.newContact],
+      }));
+    } catch (err) {
+      console.log("error", err);
+      const errorMessage =
+        err.response?.data?.message || "Something went wrong!";
+      toast.error(errorMessage);
+    } finally {
+      set({ isLoading: false });
+    }
+  },
 }));

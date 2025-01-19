@@ -1,5 +1,5 @@
 import Sidebar from "../components/Sidebar";
-import { Search } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 import { useContactsStore } from "../store/useContactsStore";
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
@@ -71,10 +71,11 @@ const ContactsPage = () => {
           </div>
           {/* The button to open modal */}
           <label
-            htmlFor="save-contact"
-            className="btn absolute bottom-5 right-5"
+            htmlFor="add-contact"
+            className="tooltip btn p-2 pt-[10px] px-[10px] absolute bottom-10 right-10 rounded-full border-2 border-[#794CEB]"
+            data-tip="Add Contact"
           >
-            Add Contact
+            <Plus className="size-6"/> 
           </label>
           <UserList/>
         </div>

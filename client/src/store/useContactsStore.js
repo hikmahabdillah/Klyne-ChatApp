@@ -7,7 +7,7 @@ export const useContactsStore = create((set) => ({
   users: [],
   isLoading: true,
 
-  listContact: async() => {
+  contactList: async() => {
     set({isLoading: true})
     try {
       const res = await axiosInstance.get("/contacts")
@@ -20,7 +20,7 @@ export const useContactsStore = create((set) => ({
       set({isLoading: false})
     }
   },
-  listUser: async() => {
+  userList: async() => {
     set({isLoading: true})
     try {
       const res = await axiosInstance.get("/contacts/list-user")
@@ -29,6 +29,19 @@ export const useContactsStore = create((set) => ({
     } catch (err) {
       console.log("Error in list contact: ",err)
       set({contacts:null});
+    }finally{
+      set({isLoading: false})
+    }
+  },
+  searchUser: async(searchTerm) => {
+    set({isLoading: true})
+    try{
+      const res = await axiosInstance.get(`contacts/search-user?searchId=${searchTerm}`);
+
+      set({users: res.data});
+    }catch(err){
+      console.log("Error in searchContact: ",err)
+      set({users:null});
     }finally{
       set({isLoading: false})
     }

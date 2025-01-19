@@ -1,7 +1,7 @@
 import Contacts from "../models/contacts.model.js";
 import User from "../models/user.model.js";
 
-export const listUser = async(req, res) => {
+export const userList = async(req, res) => {
   try{
     const loginUserId = req.user._id;
 
@@ -9,7 +9,7 @@ export const listUser = async(req, res) => {
 
     res.status(200).json(users);
   }catch(err){
-    console.log("Error in listUser controller", err);
+    console.log("Error in userList controller", err);
     res.status(500).json({message: "Internal server error"});
   }
 }
@@ -28,12 +28,12 @@ export const searchUser = async(req, res) => {
 
     res.status(200).json(users);
   }catch(err){
-    console.log("Error in listUser controller", err);
+    console.log("Error in userList controller", err);
     res.status(500).json({message: "Internal server error"});
   }
 }
 
-export const listContact = async(req, res) => {
+export const contactList = async(req, res) => {
   try{
     const loginUserId = req.user.customId;
 
@@ -51,7 +51,7 @@ export const listContact = async(req, res) => {
 
     res.status(200).json(result);
   }catch(err){
-    console.log("Error in listContact controller", err);
+    console.log("Error in contactList controller", err);
     res.status(500).json({message: "Internal server error"});
   }
 }

@@ -1,20 +1,21 @@
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 import { useLocation } from 'react-router-dom'
+import { LogOut, Contact, MessageCircle, Settings } from "lucide-react";
 
-const IconMenu = ({linkTo, icon, activeClass, dataTip, authUser}) => {
-  const Icon = () => {
+const IconMenu = ({linkTo, Icon, activeClass, dataTip, authUser}) => {
+  const IconDisplay = () => {
     return (
       (dataTip === 'Profile') ? <img
-        className="size-8 md:size-9 object-cover rounded-full"
+        className="size-7 md:size-8 object-cover rounded-full"
         src={authUser?.profilePic || "/Avatar.svg"}
         alt="User Profile"
-      />: <img src={`/${icon}.svg`} className="size-8 md:size-9" alt="" width="37px" />
+      />: <Icon className="size-7 md:size-8" />
     );
   };
 
   return (
-    <Link to={linkTo} className={`tooltip tooltip-right font-medium text-slate-50 ${activeClass(linkTo)}`} data-tip={dataTip}><Icon/></Link>
+    <Link to={linkTo} className={`tooltip tooltip-right font-medium  ${activeClass(linkTo)}`} data-tip={dataTip}><IconDisplay/></Link>
   )
 }
 
@@ -23,44 +24,44 @@ const Sidebar = () => {
   const location = useLocation();
 
   const activeClass = (path) => {
-    return (location.pathname === path ? "p-2 rounded-lg rounded-tl-none bg-neutral-700 border-l-4 border-[#794CEB]" : "")
+    return (location.pathname === path ? "p-2 rounded-lg rounded-tl-none border-l-4 " : "")
   }
 
   return (
     <>
-      <div className="flex flex-col justify-between items-center h-screen min-w-max pt-3 md:pt-0 pb-2">
+      <div className="flex flex-col justify-between items-center h-screen min-w-max pt-3 md:pt-0 pb-2 border-r border-r-neutral/20">
       <div className="flex flex-col gap-4 items-center p-2">
         <img src="./Main Logo.svg" alt="Logo Klyne" width="45px" />
-        <div className="w-full bg-slate-50 h-[0.5px]"/>
+        <div className="w-full border border-neutral/20 h-[0.25px]"/>
         <IconMenu
             linkTo="/"
-            icon="Messages"
+            Icon={MessageCircle}
             activeClass={activeClass}
             dataTip="Chat Messages"
           />
           <IconMenu
             linkTo="/contacts"
-            icon="Contacts"
+            Icon={Contact}
             activeClass={activeClass}
             dataTip="Contacts"
           />
         </div>
-        <div className="flex flex-col gap-4 items-center p-0 md:p-2">
+        <div className="flex flex-col gap-4 items-center p-0 md:p-2 w-full">
           <IconMenu
             linkTo="/settings"
-            icon="Settings"
+            Icon={Settings}
             activeClass={activeClass}
             dataTip="Settings"
           />
           <IconMenu
             linkTo="/profile"
-            icon="Profile"
+            Icon="Profile"
             activeClass={activeClass}
             dataTip="Profile"
             authUser={authUser}
           />
-        <div className="w-full bg-slate-50 h-[0.5px]"/>
-        <label className="cursor-pointer tooltip tooltip-right font-medium text-slate-50" data-tip="Logout" htmlFor="logout_modal"><img src="/Logout.svg" className="size-8 md:size-9" alt="" width="37px" /></label>
+        <div className="w-full border border-neutral/20 h-[0.5px]"/>
+        <label className="cursor-pointer tooltip tooltip-right font-medium " data-tip="Logout" htmlFor="logout_modal"><LogOut className="size-7 md:size-8"/></label>
       </div>
       </div>
       <input type="checkbox" id="logout_modal" className="modal-toggle" />
@@ -76,7 +77,7 @@ const Sidebar = () => {
             >
               Confirm
             </button>
-        <label className="btn text-white" htmlFor="logout_modal">
+        <label className="btn " htmlFor="logout_modal">
           Close
         </label>
           </div>

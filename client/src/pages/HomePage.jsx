@@ -8,7 +8,7 @@ const HomePage = () => {
   return (
     <div className="h-screen flex items-center">
       <Sidebar />
-      <div className="w-full h-full bg-[#323131] flex">
+      <div className="w-full h-full flex">
         <ChatList />
         {/* CHAT Messages */}
         <div className="hidden md:flex box w-full overflow-auto flex-1 flex-col">

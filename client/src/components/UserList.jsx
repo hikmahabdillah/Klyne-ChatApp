@@ -29,7 +29,7 @@ const User = ({ data, selectedUserId, setSelectedUserId }) => {
 
         {!isUpdate ? (
           <div>
-            <h2 className="text-lg text-slate-50 font-semibold leading-none">
+            <h2 className="text-lg  font-semibold leading-none">
               {data.fullName}
             </h2>
             <p className="text-sm">@{data.customId}</p>
@@ -88,8 +88,8 @@ const UserList = () => {
     <>
       <input type="checkbox" id="add-contact" className="modal-toggle" />
       <div className="modal" role="dialog">
-        <div className="modal-box w-full max-w-lg mx-auto p-4 gap-4 md:border md:border-slate-50 rounded-xl shadow-lg flex flex-col">
-          <h3 className="text-lg font-bold text-slate-50">Add Contact</h3>
+        <div className="modal-box w-full max-w-lg mx-auto p-4 gap-4 md:border rounded-xl shadow-lg flex flex-col">
+          <h3 className="text-lg font-bold ">Add Contact</h3>
           <label className="input input-bordered flex items-center gap-2 p-3 mt-3">
             <Search />
             <input
@@ -100,7 +100,7 @@ const UserList = () => {
               placeholder="Search id"
             />
           </label>
-          <div className="flex flex-col gap-4 p-3 overflow-auto md:max-h-[400px] border border-neutral-700 rounded-lg">
+          <div className="flex flex-col gap-4 p-3 overflow-auto md:max-h-[400px] border rounded-lg">
             {!isLoading
               ? users.map((item, index) => (
                   <User

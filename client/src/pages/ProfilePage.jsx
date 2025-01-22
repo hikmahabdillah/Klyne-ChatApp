@@ -24,7 +24,7 @@ const PhotoProfile = ({ imagePreview, isUpdateProfile, handleUpdatePhoto }) => {
       />
       <label
         htmlFor="profilePic"
-        className="absolute w-full h-full bg-neutral-800 bg-opacity-60 flex items-center justify-center z-10 top-0 cursor-pointer opacity-0 transition-all duration-500 group-hover:opacity-100"
+        className="absolute w-full h-full  bg-opacity-60 flex items-center justify-center z-10 top-0 cursor-pointer opacity-0 transition-all duration-500 group-hover:opacity-100"
       >
         <ImageUp color="#794CEB" className="size-9 md:size-16" />
       </label>
@@ -107,8 +107,8 @@ const ProfilePage = () => {
     <div className="h-screen flex items-center">
       <Sidebar />
       <div className="w-full flex items-center justify-center p-2 md:p-6">
-        <div className="card flex flex-col md:flex-row bg-base-100 shadow-xl border border-slate-50 h-full md:max-h-96 overflow-hidden w-full max-w-md md:max-w-2xl animate-scaleUp">
-          <h2 className="mt-6 text-center font-semibold text-2xl text-slate-50 md:hidden">
+        <div className="card flex flex-col md:flex-row  shadow-xl border h-full md:max-h-96 overflow-hidden w-full max-w-md md:max-w-2xl animate-scaleUp">
+          <h2 className="mt-6 text-center font-semibold text-2xl  md:hidden">
             Your Profile
           </h2>
           <PhotoProfile
@@ -117,7 +117,7 @@ const ProfilePage = () => {
             handleUpdatePhoto={handleUpdatePhoto}
           />
           <div className="card-body p-6 pb-5">
-            <h2 className="mt-2 mb-2 text-center font-semibold text-2xl text-slate-50 hidden md:block">
+            <h2 className="mt-2 mb-2 text-center font-semibold text-2xl  hidden md:block">
               Your Profile
             </h2>
             <form id="updateProfile" onSubmit={handleSubmit} className="flex flex-col gap-4">

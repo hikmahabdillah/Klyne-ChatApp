@@ -81,4 +81,22 @@ export const useContactsStore = create((set) => ({
       set({ isLoading: false });
     }
   },
+  deleteContact: async(id) => {
+    set({isLoading: true});
+    try {
+      await axiosInstance.delete(`contacts/delete-contact/${id}`);
+      toast.success("Delete contact successfully");
+
+      set((state) => ({
+        contacts: state.contacts.filter((contact) => contact.contactId !== id),
+      }));
+    } catch (err) {
+      console.log("error", err);
+      const errorMessage =
+        err.response?.data?.message || "Something went wrong!";
+      toast.error(errorMessage);
+    } finally {
+      set({ isLoading: false });
+    }
+  }
 }));

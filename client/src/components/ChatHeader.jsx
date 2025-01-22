@@ -2,7 +2,7 @@ import { X } from "lucide-react";
 
 const ChatHeader = () => {
   return (
-    <div className="flex items-center justify-between w-full px-4 py-2 bg-neutral-600">
+    <div className="flex items-center justify-between w-full px-4 py-2 border-b border-b-neutral/20">
       <div className="flex items-center gap-3">
         <div className="avatar w-max">
           <div className="size-12 rounded-full">
@@ -10,7 +10,7 @@ const ChatHeader = () => {
           </div>
         </div>
         <div>
-          <h2 className="text-lg text-slate-50 font-semibold leading-none">Foden</h2>
+          <h2 className="text-lg  font-semibold leading-none">Foden</h2>
           <p className="text-sm">Online</p>
         </div>
       </div>

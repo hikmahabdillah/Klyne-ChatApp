@@ -26,4 +26,7 @@ export default {
     },
   },
   plugins: [daisyui],
+  daisyui:{
+    themes:["light", "dark", "bumblebee", "cmyk", "acid", "valentine", "halloween", "winter"],
+  }
 }

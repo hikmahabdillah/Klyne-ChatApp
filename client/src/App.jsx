@@ -9,9 +9,11 @@ import { useAuthStore } from "./store/useAuthStore";
 import { useEffect } from "react";
 import {Loader} from "lucide-react";
 import { Toaster } from "react-hot-toast";
+import { useThemesStore } from './store/useThemesStore';
 
 const App = () => {
   const {authUser, checkAuth, isCheckingAuth} = useAuthStore();
+  const {theme} = useThemesStore();
 
   useEffect(()=> {
     checkAuth();
@@ -29,10 +31,9 @@ const App = () => {
       ? (authUser ? element : <Navigate to="/login" />)
       : (!authUser ? element : <Navigate to="/" />);
   };
-  
 
   return (
-    <>
+    <div data-theme={theme} className="transition-all duration-700">
       <Routes>
         <Route path="/signup" element={navigatePage({ element: <SignUpPage />, requiresAuth: false })} />
         <Route path="/login" element={navigatePage({ element: <LoginPage />, requiresAuth: false })} />
@@ -43,7 +44,7 @@ const App = () => {
       </Routes>
 
       <Toaster/>
-    </>
+    </div>
   );
 };
 

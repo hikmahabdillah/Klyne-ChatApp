@@ -31,7 +31,7 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen flex justify-center items-center p-5">
-      <div className="box flex items-center gap-3 border border-red-50 w-full max-w-md md:max-w-4xl py-6 md:p-3 rounded-3xl max-h-[630px] md:h-full">
+      <div className="box flex items-center gap-3 border w-full max-w-md md:max-w-4xl py-6 md:p-3 rounded-3xl max-h-[630px] md:h-full">
         <div className="hidden box-1 h-[585px] w-full max-w-sm bg-gradient-to-b from-[#ddd] via-[#794CEB] to-[#FF00E5] rounded-xl md:flex md:items-center">
           <img src="./Signin-Illustration.svg"  className="animate-float" alt="" />
         </div>

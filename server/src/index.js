@@ -10,7 +10,7 @@ import contactsRoutes from "./routes/contacts.route.js"
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 5001;
 
 // middleware
 app.use(express.json({ limit: "10mb" })); // middleware that will process the JSON-formatted request body

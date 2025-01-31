@@ -1,3 +1,3 @@
 export const THEMES = [
-  "light", "dark", "bumblebee", "cmyk", "acid", "valentine", "halloween", "winter"
+  "light", "dark", "bumblebee", "synthwave", "acid", "valentine", "halloween", "winter"
 ]

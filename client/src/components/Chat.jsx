@@ -1,6 +1,6 @@
-const Chat = ({photo, name, lastText, lastChatTime, isOpen = false}) => {
+const Chat = ({photo, name, lastText, lastChatTime,setSelectedUser, isOpen = false}) => {
   return (
-    <div className={`flex items-center gap-3 p-2 relative ${isOpen && " rounded-lg"}`}>
+    <div className={`flex items-center gap-3 p-2 relative ${isOpen && "ring-1 ring-base-300 bg-base-300 rounded-lg"}`} onClick={() => {setSelectedUser(name)}}>
       <div className="avatar w-max online before:bg-green-600">
         <div className="size-16 rounded-full">
           <img src={photo} />

@@ -4,8 +4,20 @@ import toast from "react-hot-toast";
 
 export const useContactsStore = create((set) => ({
   contacts: [],
+  detail: null,
   users: [],
   isLoading: true,
+
+  detailContact: async (id) => {
+    try {
+      const res = await axiosInstance.get(`/contacts/detail-contact/${id}`);
+
+      set({ detail: res.data });
+    } catch (err) {
+      console.log("Error in list contact: ", err);
+      set({ detail: null });
+    }
+  },
 
   contactList: async () => {
     set({ isLoading: true });
@@ -81,8 +93,8 @@ export const useContactsStore = create((set) => ({
       set({ isLoading: false });
     }
   },
-  deleteContact: async(id) => {
-    set({isLoading: true});
+  deleteContact: async (id) => {
+    set({ isLoading: true });
     try {
       await axiosInstance.delete(`contacts/delete-contact/${id}`);
       toast.success("Delete contact successfully");
@@ -98,5 +110,5 @@ export const useContactsStore = create((set) => ({
     } finally {
       set({ isLoading: false });
     }
-  }
+  },
 }));

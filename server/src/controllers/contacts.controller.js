@@ -36,12 +36,42 @@ export const searchUser = async (req, res) => {
   }
 };
 
+export const detailContact = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const loginUserId = req.user.customId;
+
+    const contact = await Contacts.findOne({
+      userId: loginUserId,
+      contactId: id,
+    }).lean();
+
+    if (!contact) {
+      return res.status(404).json({ message: "Contact not found" });
+    }
+
+    const profile = await User.findOne({ customId: id })
+      .select("customId profilePic")
+      .lean();
+
+    const result = {
+      ...contact,
+      profilePic: profile ? profile.profilePic : null,
+    };
+
+    res.status(200).json(result);
+  } catch (err) {
+    console.error("Error in detailContact controller:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export const contactList = async (req, res) => {
   try {
     const loginUserId = req.user.customId;
 
     const contacts = await Contacts.find({ userId: loginUserId }).select(
-      "contactId contactName createdAt"
+      "contactId contactRef contactName createdAt"
     );
     const profilePics = await User.find({
       customId: { $in: contacts.map((c) => c.contactId) },
@@ -102,23 +132,31 @@ export const saveContact = async (req, res) => {
     const { contactId, contactName } = req.body;
     const userId = req.user.customId;
 
-    // input validation
+    // Input validation
     if (!contactId || !contactName) {
       return res
         .status(400)
         .json({ message: "Please provide all required fields" });
     }
 
-    // user validation
+    // User validation
     const existUser = await User.findOne({ customId: contactId });
     if (!existUser) return res.status(404).json({ message: "User not found" });
 
-    const contacts = await Contacts.findOne({ contactId });
-    if (contacts)
-      return res.status(400).json({ message: "Contact already exist" });
+    const contactRef = existUser._id.toString();
 
+    console.log("existUser:", existUser);
+    console.log("contactRef:", contactRef);
+
+    // Cek apakah kontak sudah ada
+    const contacts = await Contacts.findOne({ contactId, userId });
+    if (contacts)
+      return res.status(400).json({ message: "Contact already exists" });
+
+    // Simpan kontak baru
     const newContact = new Contacts({
-      userId,
+      userId, // Pastikan userId juga ObjectId
+      contactRef,
       contactId,
       contactName,
     });

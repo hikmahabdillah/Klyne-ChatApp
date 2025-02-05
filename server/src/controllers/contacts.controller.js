@@ -36,35 +36,35 @@ export const searchUser = async (req, res) => {
   }
 };
 
-export const detailContact = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const loginUserId = req.user.customId;
+// export const detailContact = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const loginUserId = req.user.customId;
 
-    const contact = await Contacts.findOne({
-      userId: loginUserId,
-      contactId: id,
-    }).lean();
+//     const contact = await Contacts.findOne({
+//       userId: loginUserId,
+//       contactId: id,
+//     }).lean();
 
-    if (!contact) {
-      return res.status(404).json({ message: "Contact not found" });
-    }
+//     if (!contact) {
+//       return res.status(404).json({ message: "Contact not found" });
+//     }
 
-    const profile = await User.findOne({ customId: id })
-      .select("customId profilePic")
-      .lean();
+//     const profile = await User.findOne({ customId: id })
+//       .select("customId profilePic")
+//       .lean();
 
-    const result = {
-      ...contact,
-      profilePic: profile ? profile.profilePic : null,
-    };
+//     const result = {
+//       ...contact,
+//       profilePic: profile ? profile.profilePic : null,
+//     };
 
-    res.status(200).json(result);
-  } catch (err) {
-    console.error("Error in detailContact controller:", err);
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
+//     res.status(200).json(result);
+//   } catch (err) {
+//     console.error("Error in detailContact controller:", err);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// };
 
 export const contactList = async (req, res) => {
   try {
@@ -145,9 +145,6 @@ export const saveContact = async (req, res) => {
 
     const contactRef = existUser._id.toString();
 
-    console.log("existUser:", existUser);
-    console.log("contactRef:", contactRef);
-
     // Cek apakah kontak sudah ada
     const contacts = await Contacts.findOne({ contactId, userId });
     if (contacts)
@@ -155,7 +152,7 @@ export const saveContact = async (req, res) => {
 
     // Simpan kontak baru
     const newContact = new Contacts({
-      userId, // Pastikan userId juga ObjectId
+      userId,
       contactRef,
       contactId,
       contactName,

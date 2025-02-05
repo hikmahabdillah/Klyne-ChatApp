@@ -3,7 +3,6 @@ import {
   saveContact,
   searchContact,
   searchUser,
-  detailContact,
   contactList,
   deleteContact,
   userList,
@@ -13,7 +12,7 @@ import { protectRoute } from "../middlewares/auth.middleware.js";
 const router = express.Router();
 
 router.get("/", protectRoute, contactList);
-router.get("/detail-contact/:id", protectRoute, detailContact);
+// router.get("/detail-contact/:id", protectRoute, detailContact);
 router.get("/list-user", protectRoute, userList);
 router.get("/search-user", protectRoute, searchUser);
 router.get("/search-contact", protectRoute, searchContact);

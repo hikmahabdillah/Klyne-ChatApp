@@ -5,25 +5,25 @@ import { useEffect } from "react";
 
 const ChatHeader = () => {
   const { selectedUser, setSelectedUser } = useChatStore();
-  const { detail, detailContact } = useContactsStore();
+  // const { detail, detailContact } = useContactsStore();
 
-  useEffect(() => {
-    if (selectedUser) {
-      detailContact(selectedUser?.contactId);
-    }
-  }, [selectedUser, detailContact]);
+  // useEffect(() => {
+  //   if (selectedUser) {
+  //     detailContact(selectedUser?.contactId);
+  //   }
+  // }, [selectedUser, detailContact]);
 
   return (
     <div className="flex items-center justify-between w-full px-4 py-2 border-b border-b-neutral/20">
       <div className="flex items-center gap-3">
         <div className="avatar w-max">
           <div className="size-12 rounded-full">
-            <img src={detail?.profilePic || "/Avatar.svg"} alt="Avatar" />
+            <img src={selectedUser?.profilePic || "/Avatar.svg"} alt="Avatar" />
           </div>
         </div>
         <div>
           <h2 className="text-lg  font-semibold leading-none">
-            {detail?.contactName}
+            {selectedUser?.contactName}
           </h2>
           <p className="text-sm">Online</p>
         </div>

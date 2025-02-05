@@ -4,20 +4,20 @@ import toast from "react-hot-toast";
 
 export const useContactsStore = create((set) => ({
   contacts: [],
-  detail: null,
+  // detail: null,
   users: [],
   isLoading: true,
 
-  detailContact: async (id) => {
-    try {
-      const res = await axiosInstance.get(`/contacts/detail-contact/${id}`);
+  // detailContact: async (id) => {
+  //   try {
+  //     const res = await axiosInstance.get(`/contacts/detail-contact/${id}`);
 
-      set({ detail: res.data });
-    } catch (err) {
-      console.log("Error in list contact: ", err);
-      set({ detail: null });
-    }
-  },
+  //     set({ detail: res.data });
+  //   } catch (err) {
+  //     console.log("Error in list contact: ", err);
+  //     set({ detail: null });
+  //   }
+  // },
 
   contactList: async () => {
     set({ isLoading: true });

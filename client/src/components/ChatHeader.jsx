@@ -14,9 +14,9 @@ const ChatHeader = () => {
   // }, [selectedUser, detailContact]);
 
   return (
-    <div className="flex items-center justify-between w-full px-4 py-2 border-b border-b-neutral/20">
+    <div className="flex items-center justify-between w-full px-4 py-4 md:py-2 border-b border-b-neutral/20">
       <div className="flex items-center gap-3">
-        <div className="avatar w-max">
+        <div className="avatar w-max relative">
           <div className="size-12 rounded-full">
             <img src={selectedUser?.profilePic || "/Avatar.svg"} alt="Avatar" />
           </div>

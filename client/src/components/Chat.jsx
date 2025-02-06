@@ -4,7 +4,7 @@ const Chat = ({ data, setSelectedUser, selectedUser }) => {
       className={`flex items-center gap-3 p-2 relative ${
         (selectedUser?.contactId === data?.contactId
           ? data?.contactId
-          : null) && "ring-1 ring-base-300 bg-base-300 rounded-lg"
+          : null) && "ring-1 ring-base-100 bg-base-100 rounded-lg"
       }`}
       onClick={() => {
         setSelectedUser(data);

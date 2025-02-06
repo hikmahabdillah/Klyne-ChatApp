@@ -6,6 +6,7 @@ export const useContactsStore = create((set) => ({
   contacts: [],
   // detail: null,
   users: [],
+  onlineUsers: [],
   isLoading: true,
 
   // detailContact: async (id) => {

@@ -23,7 +23,7 @@ const ChatInput = () => {
     <form
       onSubmit={handleSubmit}
       id="sendMessage"
-      className="flex items-center w-full p-1 pe-5 gap-4 pt-3 mb-3 border-t border-t-neutral/30"
+      className="flex items-center w-full p-3 md:p-1 pe-5 gap-4 pt-3 mb-1 md:mb-3 border-t border-t-neutral/30"
     >
       <input
         value={formData.text}

@@ -24,7 +24,7 @@ const PhotoProfile = ({ imagePreview, isUpdateProfile, handleUpdatePhoto }) => {
       />
       <label
         htmlFor="profilePic"
-        className="absolute w-full h-full  bg-opacity-60 flex items-center justify-center z-10 top-0 cursor-pointer opacity-0 transition-all duration-500 group-hover:opacity-100"
+        className="absolute w-full h-full  bg-opacity-60 flex items-center justify-center z-10 top-0 cursor-pointer opacity-0 transition-all duration-500 group-hover:opacity-100 bg-neutral-900"
       >
         <ImageUp color="#794CEB" className="size-9 md:size-16" />
       </label>
@@ -51,7 +51,8 @@ const InputFormWithIcon = ({ formData, setFormData, name, text, Icon }) => {
 
 // Komponen Utama
 const ProfilePage = () => {
-  const { authUser, isUpdateProfile, updateProfile, updatePhotoProfile } = useAuthStore();
+  const { authUser, isUpdateProfile, updateProfile, updatePhotoProfile } =
+    useAuthStore();
   const user = authUser;
 
   const [formData, setFormData] = useState({
@@ -60,13 +61,18 @@ const ProfilePage = () => {
     fullName: user.fullName,
   });
 
-  const accountCreatedAt = new Date(user.createdAt).toLocaleDateString("id-ID", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
+  const accountCreatedAt = new Date(user.createdAt).toLocaleDateString(
+    "id-ID",
+    {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }
+  );
 
-  const [imagePreview, setImagePreview] = useState(user.profilePic || "/Avatar.svg");
+  const [imagePreview, setImagePreview] = useState(
+    user.profilePic || "/Avatar.svg"
+  );
 
   const handleUpdatePhoto = async (event) => {
     event.preventDefault();
@@ -90,7 +96,8 @@ const ProfilePage = () => {
     if (!formData.customId.trim()) return alert("Custom Id is required!");
     if (!formData.fullName.trim()) return alert("Full Name is required!");
     if (!formData.email.trim()) return alert("Email is required!");
-    if (!/\S+@\S+\.\S+/.test(formData.email)) return alert("Invalid email format");
+    if (!/\S+@\S+\.\S+/.test(formData.email))
+      return alert("Invalid email format");
 
     return true;
   };
@@ -120,7 +127,11 @@ const ProfilePage = () => {
             <h2 className="mt-2 mb-2 text-center font-semibold text-2xl  hidden md:block">
               Your Profile
             </h2>
-            <form id="updateProfile" onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <form
+              id="updateProfile"
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-4"
+            >
               <InputFormWithIcon
                 formData={formData}
                 setFormData={setFormData}
@@ -142,8 +153,16 @@ const ProfilePage = () => {
                 text="Fullname"
                 Icon={UserRound}
               />
-              <button type="submit" className="btn btn-primary" disabled={isUpdateProfile}>
-                {isUpdateProfile ? <Loader2 className="animate-spin" /> : "Save Changes"}
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={isUpdateProfile}
+              >
+                {isUpdateProfile ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "Save Changes"
+                )}
               </button>
             </form>
             <p className="mt-5">Since: {accountCreatedAt}</p>

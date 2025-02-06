@@ -5,16 +5,15 @@ import Chat from "./Chat";
 import { Search } from "lucide-react";
 
 const ChatList = () => {
-  const { contacts, contactList, isLoading } = useContactsStore();
+  const { contacts, contactList, isLoading, onlineUsers } = useContactsStore();
   const { selectedUser, setSelectedUser } = useChatStore();
-  const onlineUsers = [];
 
   useEffect(() => {
     contactList();
   }, [contactList]);
 
   return (
-    <div className="box w-full h-full min-w-80 md:max-w-sm  p-3 flex flex-col gap-4  overflow-auto custom-scrollbar">
+    <div className="box w-full h-full min-w-64 md:max-w-xs  p-3 flex flex-col gap-4  overflow-auto custom-scrollbar">
       <h1 className="text-3xl font-bold bg-gradient-to-r from-[#FF00E5] to-[#794CEB] text-transparent bg-clip-text pb-1">
         Klyne
       </h1>

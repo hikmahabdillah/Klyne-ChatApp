@@ -1,5 +1,4 @@
 const ChatBubble = ({ sendTime, chat, typeChat, isSameSenderAsPrevious }) => {
-  console.log(isSameSenderAsPrevious);
   if (typeChat === "receive") {
     return (
       <div

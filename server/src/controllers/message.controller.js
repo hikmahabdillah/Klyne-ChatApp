@@ -1,3 +1,4 @@
+import cloudinary from "../lib/cloudinary.js";
 import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
 
@@ -53,9 +54,7 @@ export const sendMessage = async (req, res) => {
       image: imageUrl,
     });
 
-    await newMessage.save(); // save it to database
-
-    // todo: realtime functionality => socket.io
+    await newMessage.save();
 
     res.status(201).json(newMessage);
   } catch (err) {

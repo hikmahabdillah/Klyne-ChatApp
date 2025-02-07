@@ -12,13 +12,13 @@ const HomePage = () => {
   return (
     <div className="h-screen flex items-center">
       <Sidebar />
-      <div className="w-full h-full flex bg-base-300 relative">
+      <div className="w-full h-full flex relative">
         <ChatList />
         {/* CHAT Messages */}
         {!selectedUser ? (
           <NoChatSelected />
         ) : (
-          <div className="flex w-full overflow-auto flex-1 flex-col fixed left-0 md:static bg-base-200 z-10 h-full">
+          <div className="flex w-full overflow-auto flex-1 flex-col fixed left-0 md:static bg-base-100 z-10 h-full">
             <ChatHeader />
             <ChatContainer />
             <ChatInput />

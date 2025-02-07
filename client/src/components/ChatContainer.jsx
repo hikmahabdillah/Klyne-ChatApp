@@ -35,17 +35,38 @@ const ChatContainer = () => {
       {messages.map((msg, index) => {
         const isSameSenderAsPrevious =
           index > 0 && messages[index - 1]?.senderId === msg.senderId;
+        const isSender = msg.senderId === selectedUser?.contactRef;
 
         return (
-          <ChatBubble
-            key={index}
-            typeChat={
-              msg.senderId === selectedUser?.contactRef ? "receive" : "send"
-            }
-            sendTime={formatTime(msg.createdAt)}
-            chat={msg.text}
-            isSameSenderAsPrevious={isSameSenderAsPrevious} // True jika pengirimnya sama dengan pesan sebelumnya
-          />
+          <>
+            {msg.image && (
+              <div
+                className={`w-max flex flex-col gap-2 p-1 !mb-1 ${
+                  isSender ? "mr-auto ml-3" : "ml-auto mr-3"
+                }`}
+              >
+                <img
+                  src={msg.image}
+                  alt=""
+                  className="size-40 object-cover rounded-lg border"
+                />
+                <p
+                  className={`text-xs ${isSender ? "self-start" : "self-end"}`}
+                >
+                  {formatTime(msg.createdAt)}
+                </p>
+              </div>
+            )}
+            {msg.text && (
+              <ChatBubble
+                key={index}
+                typeChat={isSender ? "receive" : "send"}
+                sendTime={formatTime(msg.createdAt)}
+                chat={msg.text}
+                isSameSenderAsPrevious={isSameSenderAsPrevious} // True jika pengirimnya sama dengan pesan sebelumnya
+              />
+            )}
+          </>
         );
       })}
     </div>

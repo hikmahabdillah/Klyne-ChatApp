@@ -21,11 +21,12 @@ export const useChatStore = create((set) => ({
   sendMessage: async (userId, data) => {
     try {
       const res = await axiosInstance.post(`/message/send/${userId}`, data);
+
       set((state) => ({
         messages: [...state.messages, res.data],
       }));
     } catch (err) {
-      toast.error(err.response.data.message);
+      toast.error(err.response?.data?.message || "Failed to send message");
     }
   },
   //

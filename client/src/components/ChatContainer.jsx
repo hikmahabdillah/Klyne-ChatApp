@@ -60,10 +60,10 @@ const ChatContainer = () => {
             {msg.text && (
               <ChatBubble
                 key={index}
-                typeChat={isSender ? "receive" : "send"}
+                isSender={isSender}
                 sendTime={formatTime(msg.createdAt)}
                 chat={msg.text}
-                isSameSenderAsPrevious={isSameSenderAsPrevious} // True jika pengirimnya sama dengan pesan sebelumnya
+                isSameSenderAsPrevious={isSameSenderAsPrevious}
               />
             )}
           </>

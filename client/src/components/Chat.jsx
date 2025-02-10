@@ -1,4 +1,7 @@
+import { useAuthStore } from "../store/useAuthStore";
+
 const Chat = ({ data, setSelectedUser, selectedUser }) => {
+  const { onlineUsers } = useAuthStore();
   return (
     <div
       className={`flex items-center gap-3 p-2 relative ${
@@ -10,7 +13,13 @@ const Chat = ({ data, setSelectedUser, selectedUser }) => {
         setSelectedUser(data);
       }}
     >
-      <div className="avatar w-max online before:bg-green-600">
+      <div
+        className={`avatar w-max ${
+          onlineUsers.includes(data?.contactRef)
+            ? "online before:bg-green-600"
+            : ""
+        }`}
+      >
         <div className="size-16 rounded-full">
           <img src={data?.profilePic || "/Avatar.svg"} alt="Avatar" />
         </div>

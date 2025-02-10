@@ -5,7 +5,7 @@ import Chat from "./Chat";
 import { Search } from "lucide-react";
 
 const ChatList = () => {
-  const { contacts, contactList, isLoading, onlineUsers } = useContactsStore();
+  const { contacts, contactList, isLoading } = useContactsStore();
   const { selectedUser, setSelectedUser } = useChatStore();
 
   useEffect(() => {

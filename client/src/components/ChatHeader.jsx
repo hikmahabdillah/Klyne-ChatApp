@@ -2,9 +2,11 @@ import { X } from "lucide-react";
 import { useChatStore } from "../store/useChatStore";
 import { useContactsStore } from "../store/useContactsStore";
 import { useEffect } from "react";
+import { useAuthStore } from "../store/useAuthStore";
 
 const ChatHeader = () => {
   const { selectedUser, setSelectedUser } = useChatStore();
+  const { onlineUsers } = useAuthStore();
   // const { detail, detailContact } = useContactsStore();
 
   // useEffect(() => {
@@ -25,7 +27,11 @@ const ChatHeader = () => {
           <h2 className="text-lg  font-semibold leading-none">
             {selectedUser?.contactName}
           </h2>
-          <p className="text-sm">Online</p>
+          <p className="text-sm">
+            {onlineUsers.includes(selectedUser?.contactRef)
+              ? "Online"
+              : "Offline"}
+          </p>
         </div>
       </div>
       <X

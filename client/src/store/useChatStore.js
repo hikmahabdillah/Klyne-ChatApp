@@ -1,8 +1,9 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
+import { useAuthStore } from "./useAuthStore";
 
-export const useChatStore = create((set) => ({
+export const useChatStore = create((set, get) => ({
   messages: [],
   selectedUser: null,
   isMessagesLoading: true,
@@ -29,6 +30,27 @@ export const useChatStore = create((set) => ({
       toast.error(err.response?.data?.message || "Failed to send message");
     }
   },
-  //
+  listenNewMessages: () => {
+    const { selectedUser } = get();
+    if (!selectedUser) return;
+
+    const socket = useAuthStore.getState().socket;
+
+    socket.on("newMessage", (data) => {
+      const isMessageSentFromSelectedUser =
+        data.senderId === selectedUser.contactRef;
+      console.log(isMessageSentFromSelectedUser);
+      if (!isMessageSentFromSelectedUser) return;
+
+      set({
+        messages: [...get().messages, data],
+      });
+    });
+  },
+  unsubscribeFromMessages: () => {
+    const socket = useAuthStore.getState().socket;
+    socket.off("newMessage");
+  },
+
   setSelectedUser: (user) => set({ selectedUser: user }),
 }));

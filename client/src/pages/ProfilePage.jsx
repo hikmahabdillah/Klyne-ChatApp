@@ -6,11 +6,11 @@ import { useState } from "react";
 // Komponen PhotoProfile
 const PhotoProfile = ({ imagePreview, isUpdateProfile, handleUpdatePhoto }) => {
   return (
-    <div className="relative flex items-center justify-center mt-4 md:mt-0 group overflow-hidden rounded-full md:rounded-none w-full max-w-32 h-32 md:h-auto md:max-w-xs self-center">
+    <div className="relative flex items-center justify-center mt-4 md:mt-0 group overflow-hidden rounded-full md:rounded-none w-full max-w-32 h-32 md:h-96 md:max-w-xs self-center">
       <img
         src={imagePreview}
         alt="Photo Profile"
-        className="object-cover"
+        className="object-cover h-full"
         id="photoProfile"
       />
       <input

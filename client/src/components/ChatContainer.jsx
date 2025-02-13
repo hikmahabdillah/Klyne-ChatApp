@@ -3,11 +3,20 @@ import { useChatStore } from "../store/useChatStore";
 import ChatBubble from "./ChatBubble";
 
 const ChatContainer = () => {
-  const { selectedUser, messages, getMessages } = useChatStore();
+  const {
+    selectedUser,
+    messages,
+    getMessages,
+    listenNewMessages,
+    unsubscribeFromMessages,
+  } = useChatStore();
   const messagesEndRef = useRef(null);
 
+  console.log(messages);
+
   useEffect(() => {
-    if (messagesEndRef.current) {
+    if (messagesEndRef.current && messages) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
       messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
     }
   }, [messages]);
@@ -24,8 +33,10 @@ const ChatContainer = () => {
   useEffect(() => {
     if (selectedUser) {
       getMessages(selectedUser?.contactRef);
+      listenNewMessages();
+      return () => unsubscribeFromMessages();
     }
-  }, [selectedUser, getMessages]);
+  }, [selectedUser, getMessages, listenNewMessages]);
 
   return (
     <div
@@ -44,6 +55,7 @@ const ChatContainer = () => {
                 className={`w-max flex flex-col gap-2 p-1 !mb-1 ${
                   isSender ? "mr-auto ml-3" : "ml-auto mr-3"
                 }`}
+                key={msg._id}
               >
                 <img
                   src={msg.image}

@@ -23,7 +23,7 @@ const ChatInput = () => {
 
     if (!text.trim() && !imagePreview) return;
     try {
-      await sendMessage(selectedUser?.contactRef, {
+      await sendMessage(selectedUser?._id, {
         text: text.trim(),
         image: imagePreview,
       });

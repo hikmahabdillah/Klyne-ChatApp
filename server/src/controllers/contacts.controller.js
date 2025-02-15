@@ -71,7 +71,7 @@ export const contactList = async (req, res) => {
     const loginUserId = req.user.customId;
 
     const contacts = await Contacts.find({ userId: loginUserId }).select(
-      "contactId contactRef contactName createdAt"
+      "userId contactId contactRef contactName createdAt"
     );
     const profilePics = await User.find({
       customId: { $in: contacts.map((c) => c.contactId) },

@@ -7,12 +7,11 @@ const ChatContainer = () => {
     selectedUser,
     messages,
     getMessages,
+    isMessagesLoading,
     listenNewMessages,
     unsubscribeFromMessages,
   } = useChatStore();
   const messagesEndRef = useRef(null);
-
-  console.log(messages);
 
   useEffect(() => {
     if (messagesEndRef.current && messages) {
@@ -32,7 +31,7 @@ const ChatContainer = () => {
 
   useEffect(() => {
     if (selectedUser) {
-      getMessages(selectedUser?.contactRef);
+      getMessages(selectedUser?._id);
       listenNewMessages();
       return () => unsubscribeFromMessages();
     }
@@ -43,10 +42,11 @@ const ChatContainer = () => {
       className="flex-1 overflow-y-auto w-full p-4 space-y-4"
       ref={messagesEndRef}
     >
+      {isMessagesLoading && <p>Loading...</p>}
       {messages.map((msg, index) => {
         const isSameSenderAsPrevious =
           index > 0 && messages[index - 1]?.senderId === msg.senderId;
-        const isSender = msg.senderId === selectedUser?.contactRef;
+        const isSender = msg.senderId === selectedUser?._id;
 
         return (
           <>

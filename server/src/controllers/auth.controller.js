@@ -3,6 +3,7 @@ import User from "../models/user.model.js";
 import Contacts from "../models/contacts.model.js";
 import bcrypt from "bcryptjs";
 import cloudinary from "../lib/cloudinary.js";
+import { io } from "../lib/socket.js";
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -156,6 +157,7 @@ export const updateProfile = async (req, res) => {
       { customId, fullName, email },
       { new: true }
     );
+
     if (updatedUser) {
       await Contacts.updateMany(
         { userId: userCustomId },

@@ -5,8 +5,10 @@ import { useAuthStore } from "./useAuthStore";
 
 export const useChatStore = create((set, get) => ({
   messages: [],
+  chatList: [],
   selectedUser: null,
   isMessagesLoading: true,
+  isLoading: true,
 
   getMessages: async (userId) => {
     set({ isMessagesLoading: true });
@@ -17,6 +19,17 @@ export const useChatStore = create((set, get) => ({
       toast.error(err.response.data.message);
     } finally {
       set({ isMessagesLoading: false });
+    }
+  },
+  getChatList: async () => {
+    set({ isLoading: true });
+    try {
+      const res = await axiosInstance.get("/message/chat");
+      set({ chatList: res.data });
+    } catch (err) {
+      toast.error(err.response.data.message);
+    } finally {
+      set({ isLoading: false });
     }
   },
   sendMessage: async (userId, data) => {
@@ -39,7 +52,6 @@ export const useChatStore = create((set, get) => ({
     socket.on("newMessage", (data) => {
       const isMessageSentFromSelectedUser =
         data.senderId === selectedUser.contactRef;
-      console.log(isMessageSentFromSelectedUser);
       if (!isMessageSentFromSelectedUser) return;
 
       set({

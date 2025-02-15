@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
+import { useContactsStore } from "./useContactsStore";
 
 const BASE_URL = "http://localhost:5001";
 
@@ -86,6 +87,11 @@ export const useAuthStore = create((set, get) => ({
     set({ isUpdateProfile: true });
     try {
       const res = await axiosInstance.put("/auth/update-photo-profile", data);
+      const updatedUser = res.data; // Data user yang telah diperbarui
+      const socket = get().socket;
+
+      socket.emit("updatePhoto", updatedUser);
+
       set({ authUser: res.data });
       toast.success("Photo Profile update successfully");
     } catch (err) {

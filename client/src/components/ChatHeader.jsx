@@ -25,12 +25,10 @@ const ChatHeader = () => {
         </div>
         <div>
           <h2 className="text-lg  font-semibold leading-none">
-            {selectedUser?.contactName}
+            {selectedUser?.fullName}
           </h2>
           <p className="text-sm">
-            {onlineUsers.includes(selectedUser?.contactRef)
-              ? "Online"
-              : "Offline"}
+            {onlineUsers.includes(selectedUser?._id) ? "Online" : "Offline"}
           </p>
         </div>
       </div>

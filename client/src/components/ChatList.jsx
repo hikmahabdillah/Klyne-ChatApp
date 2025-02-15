@@ -1,16 +1,15 @@
 import { useEffect } from "react";
 import { useChatStore } from "../store/useChatStore";
-import { useContactsStore } from "../store/useContactsStore";
 import Chat from "./Chat";
 import { Search } from "lucide-react";
 
 const ChatList = () => {
-  const { contacts, contactList, isLoading } = useContactsStore();
-  const { selectedUser, setSelectedUser } = useChatStore();
+  const { getChatList, isLoading, chatList, selectedUser, setSelectedUser } =
+    useChatStore();
 
   useEffect(() => {
-    contactList();
-  }, [contactList]);
+    getChatList();
+  }, [getChatList]);
 
   return (
     <div className="box w-full h-full min-w-64 md:max-w-xs  p-3 flex flex-col gap-4  overflow-auto custom-scrollbar">
@@ -28,12 +27,12 @@ const ChatList = () => {
         {isLoading ? (
           <p className="text-center font-semibold">Loading...</p>
         ) : (
-          contacts?.length > 0 &&
-          contacts?.map((contact) => (
+          chatList?.length > 0 &&
+          chatList?.map((chat) => (
             <Chat
-              data={contact}
+              data={chat}
               setSelectedUser={setSelectedUser}
-              key={contact._id}
+              key={chat._id}
               selectedUser={selectedUser}
             />
           ))

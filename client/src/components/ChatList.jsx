@@ -1,11 +1,28 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import Chat from "./Chat";
 import { Search } from "lucide-react";
 
 const ChatList = () => {
-  const { getChatList, isLoading, chatList, selectedUser, setSelectedUser } =
-    useChatStore();
+  const {
+    getChatList,
+    searchChatList,
+    isLoading,
+    chatList,
+    selectedUser,
+    setSelectedUser,
+  } = useChatStore();
+
+  // const [debouncedValue] = useDebounce(search, 700);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    if (search.trim() !== "") {
+      searchChatList(search);
+    } else {
+      getChatList();
+    }
+  }, [search]);
 
   useEffect(() => {
     getChatList();
@@ -19,7 +36,13 @@ const ChatList = () => {
       {/* search */}
       <label className="input input-bordered flex items-center gap-2 p-3">
         <Search />
-        <input type="text" className="grow" placeholder="Search chat" />
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="grow"
+          placeholder="Search chat"
+        />
       </label>
       {/* list of chat */}
       <div className="flex flex-col gap-3">

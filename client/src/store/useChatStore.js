@@ -21,6 +21,19 @@ export const useChatStore = create((set, get) => ({
       set({ isMessagesLoading: false });
     }
   },
+  searchChatList: async (search) => {
+    set({ isLoading: true });
+    try {
+      const result = get().chatList.filter((item) =>
+        item.fullName.toLowerCase().includes(search.toLowerCase())
+      );
+      set({ chatList: result });
+    } catch (err) {
+      toast.error(err.response?.data.message || "error");
+    } finally {
+      set({ isLoading: false });
+    }
+  },
   getChatList: async () => {
     set({ isLoading: true });
     try {

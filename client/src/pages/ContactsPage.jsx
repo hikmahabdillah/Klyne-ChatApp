@@ -23,9 +23,9 @@ const Contact = ({ contact }) => {
         </div>
         <div>
           <h2 className="text-lg  font-semibold leading-none">
-            {contact.contactName}
+            {contact?.contactName}
           </h2>
-          <p className="text-sm">@{contact.contactId}</p>
+          <p className="text-sm">@{contact?.contactId}</p>
         </div>
       </div>
       <label
@@ -109,14 +109,18 @@ const ContactsPage = () => {
             />
           </label>
           <p className="my-3">{contacts?.length} Contacts</p>
-          {!isLoading ? (contacts.length>0 && 
-            <div className="flex flex-col gap-4 p-3 overflow-x-hidden overflow-y-auto md:max-h-[400px] border rounded-lg">
-              {contacts.map((item, index) => (
-                <Contact contact={item} key={index} />
-              ))}
-            </div>
+          {!isLoading ? (
+            contacts?.length > 0 ? (
+              <div className="flex flex-col gap-4 p-3 overflow-x-hidden overflow-y-auto md:max-h-[400px] border rounded-lg">
+                {contacts.map((item, index) => (
+                  <Contact contact={item} key={index} />
+                ))}
+              </div>
+            ) : (
+              <p className="text-center italic">No contacts found</p>
+            )
           ) : (
-            "Loading..."
+            <p className="text-center italic">Loading...</p>
           )}
           {/* The button to open modal */}
           <label

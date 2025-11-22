@@ -61,10 +61,7 @@ const User = ({ data, selectedUserId, setSelectedUserId }) => {
           onClick={() => setSelectedUserId(data.customId)}
         />
       ) : (
-        <X
-          className="cursor-pointer"
-          onClick={() => setSelectedUserId(null)}
-        />
+        <X className="cursor-pointer" onClick={() => setSelectedUserId(null)} />
       )}
     </div>
   );
@@ -101,8 +98,9 @@ const UserList = () => {
             />
           </label>
           <div className="flex flex-col gap-4 p-3 overflow-auto md:max-h-[400px] border rounded-lg">
-            {!isLoading
-              ? users.map((item, index) => (
+            {!isLoading ? (
+              users?.length > 0 ? (
+                users?.map((item, index) => (
                   <User
                     data={item}
                     key={index}
@@ -110,7 +108,12 @@ const UserList = () => {
                     setSelectedUserId={setSelectedUserId}
                   />
                 ))
-              : "Loading..."}
+              ) : (
+                <p className="text-center italic">No users found</p>
+              )
+            ) : (
+              "Loading..."
+            )}
           </div>
         </div>
         <label className="modal-backdrop" htmlFor="add-contact">
@@ -120,6 +123,5 @@ const UserList = () => {
     </>
   );
 };
-
 
 export default UserList;

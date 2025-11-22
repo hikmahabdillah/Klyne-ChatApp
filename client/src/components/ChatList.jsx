@@ -28,6 +28,8 @@ const ChatList = () => {
     getChatList();
   }, [getChatList]);
 
+  console.log(chatList);
+
   return (
     <div className="box w-full h-full min-w-64 md:max-w-xs  p-3 flex flex-col gap-4  overflow-auto custom-scrollbar">
       <h1 className="text-3xl font-bold bg-gradient-to-r from-[#FF00E5] to-[#794CEB] text-transparent bg-clip-text pb-1">
@@ -49,8 +51,7 @@ const ChatList = () => {
         {/* chat */}
         {isLoading ? (
           <p className="text-center font-semibold">Loading...</p>
-        ) : (
-          chatList?.length > 0 &&
+        ) : chatList?.length > 0 ? (
           chatList?.map((chat) => (
             <Chat
               data={chat}
@@ -59,6 +60,8 @@ const ChatList = () => {
               selectedUser={selectedUser}
             />
           ))
+        ) : (
+          <p className="text-center italic">No conversation yet</p>
         )}
       </div>
     </div>

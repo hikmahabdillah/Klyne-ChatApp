@@ -83,6 +83,7 @@ export const getChatList = async (req, res) => {
           customId: user.customId,
           fullName: user.fullName,
           profilePic: user.profilePic,
+          isYourContact: contact ? true : false,
         });
       }
     });
@@ -99,6 +100,7 @@ export const getChatList = async (req, res) => {
         customId: contact.contactId,
         fullName: contact.contactName,
         profilePic: profile.profilePic ?? null,
+        isYourContact: true,
       });
     });
 

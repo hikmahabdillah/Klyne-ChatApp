@@ -21,7 +21,13 @@ const Chat = ({ data, setSelectedUser, selectedUser }) => {
           <img src={data?.profilePic || "/Avatar.svg"} alt="Avatar" />
         </div>
       </div>
-      <h2 className="text-lg  font-semibold">{data?.fullName}</h2>
+      <h2
+        className={`${
+          data?.isYourContact ? "font-semibold" : "text-primary italic"
+        } text-lg`}
+      >
+        {data?.fullName}
+      </h2>
     </div>
   );
 };
